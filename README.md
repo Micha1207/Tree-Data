@@ -1,2 +1,5 @@
-# Tree-Data
-Get data about system
+# datafetch
+Extremely simple system data get tool. 
+
+## How to run?
+Compile `main.c` C language file.
