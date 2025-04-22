@@ -15,9 +15,11 @@
 #include "ram.h"
 #include "cpu-temp.h"
 #include "logowork.h"
+#include "uptime.h"
 
 // This is not a function. This just defines colors.
 #include "colors.h"
+#define  color red // Define info_names color. Make sure color is in the 'colors.h' file.
 
 // What I call 'data-getters'.
 #define DATA_CMD   "uname -a"        // BASH
@@ -44,7 +46,7 @@ int main(){ // Main function.
   FILE *dfa = popen(ARCH_CMD, "r");
   
   if (!dfa) {
-    fprintf(stderr, "Nie udało się uruchomić polecenia lscpu.\n");
+    fprintf(stderr, "Could not run `lscpu'.\n");
     return 1;
   }
   
@@ -93,18 +95,22 @@ int main(){ // Main function.
 
   float ram_free = ram_total - ram_usage; // Calculate free RAM.
 
-  /* Print result */
+  /* UPTIME */
+  int timeup = uptime();
+
+  /* PRINT_DATA */
   work_with_logo(osid); // Function from "logowork.h"
 
   printf("\n");
-  printf("%sOS Name:%s   %s\n", cyan, reset, osnm);             // Print OS Name.
-  printf("%sHostname:%s  %s\n", cyan, reset, hnm);              // Print hostname.
-  printf("%sKernel:%s    %s\n", cyan, reset, krn);              // Print kernel name.
-  printf("%sCPU Arch:%s  %s\n", cyan, reset, arch);             // Print CPU architecture.
-  printf("%sCPU Usage:%s %.2f%%\n", cyan, reset, cpu_usage);    // Print CPU usage.
-  printf("%sCPU Temp:%s  %d\u00B0C\n", cyan, reset, cpu_tempc); // Print CPU temp.
-  printf("%sRAM Total:%s %.2f GB\n", cyan, reset, ram_total);   // Print All RAM space.
-  printf("%sRAM Usage:%s %.2f GB\n", cyan, reset, ram_usage);   // Print used RAM space.
-  printf("%sRAM Free:%s  %.2f GB\n", cyan, reset, ram_free);    // Print free RAM.
+  printf("%sOS Name:%s   %s\n", color, reset, osnm);             // Print OS Name.
+  printf("%sHostname:%s  %s\n", color, reset, hnm);              // Print hostname.
+  printf("%sKernel:%s    %s\n", color, reset, krn);              // Print kernel name.
+  printf("%sUptime:%s    %d mins\n", color, reset, timeup);      // Print system uptime.
+  printf("%sCPU Arch:%s  %s\n", color, reset, arch);             // Print CPU architecture.
+  printf("%sCPU Usage:%s %.2f%%\n", color, reset, cpu_usage);    // Print CPU usage.
+  printf("%sCPU Temp:%s  %d\u00B0C\n", color, reset, cpu_tempc); // Print CPU temp.
+  printf("%sRAM Total:%s %.2f GB\n", color, reset, ram_total);   // Print All RAM space.
+  printf("%sRAM Usage:%s %.2f GB\n", color, reset, ram_usage);   // Print used RAM space.
+  printf("%sRAM Free:%s  %.2f GB\n", color, reset, ram_free);    // Print free RAM.
   return 0;
 }
