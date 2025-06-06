@@ -1,2 +1,2 @@
 all:
-  gcc main.c -o a.elf
+	gcc main.c -o a.elf
